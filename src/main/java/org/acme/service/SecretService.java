@@ -48,4 +48,26 @@ public class SecretService {
                 request.secretContent()
         );
     }
+
+    public SecretResponse findById(UUID userId, UUID secretId) {
+
+        Secret secret = Secret.find(
+                "id = ?1 and user.id = ?2",
+                secretId,
+                userId
+        ).firstResult();
+
+        if (secret == null) {
+            throw new WebApplicationException(
+                    "Segredo não encontrado.",
+                    Response.Status.NOT_FOUND
+            );
+        }
+
+        return new SecretResponse(
+                secret.id,
+                cryptoService.decrypt(secret.title),
+                cryptoService.decrypt(secret.secretContent)
+        );
+    }
 }
