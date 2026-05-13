@@ -1,4 +1,4 @@
-package org.acme.exception;
+package org.acme.exception.handler;
 
 import java.time.LocalDateTime;
 
