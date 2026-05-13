@@ -1,5 +1,6 @@
 package org.acme.controller;
 
+import io.smallrye.faulttolerance.api.RateLimit;
 import jakarta.inject.Inject;
 import org.acme.dto.request.LoginRequest;
 import org.acme.dto.request.RegisterRequest;
@@ -15,6 +16,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.service.AuthService;
 
+import java.time.temporal.ChronoUnit;
+
 @Path("/api")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,6 +28,7 @@ public class AuthController {
 
     @POST
     @Path("/register")
+    @RateLimit(value = 5, window = 1, windowUnit = ChronoUnit.MINUTES)
     public Response register(@Valid RegisterRequest request) {
         UserResponse response = authService.register(request);
 
@@ -35,6 +39,7 @@ public class AuthController {
 
     @POST
     @Path("/login")
+    @RateLimit(value = 5, window = 1, windowUnit = ChronoUnit.MINUTES)
     public Response login(@Valid LoginRequest request) {
         LoginResponse response = authService.login(request);
 

@@ -1,7 +1,9 @@
 package org.acme.controller;
 
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
+import io.smallrye.faulttolerance.api.RateLimit;
 import jakarta.ws.rs.*;
 import org.acme.dto.request.SecretRequest;
 import org.acme.dto.response.SecretResponse;
@@ -25,6 +27,7 @@ public class SecretController {
     JsonWebToken jwt;
 
     @POST
+    @RateLimit(value = 30, window = 1, windowUnit = ChronoUnit.MINUTES)
     public Response create(@Valid SecretRequest request) {
 
         UUID userId = UUID.fromString(
@@ -43,6 +46,7 @@ public class SecretController {
 
     @GET
     @Path("/{id}")
+    @RateLimit(value = 30, window = 1, windowUnit = ChronoUnit.MINUTES)
     public Response findById(@PathParam("id") UUID secretId) {
 
         UUID userId = UUID.fromString(
