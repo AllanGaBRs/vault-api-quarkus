@@ -1,11 +1,11 @@
 package org.acme.controller;
 
 import jakarta.inject.Inject;
-import org.acme.dto.RegisterRequest;
-import org.acme.dto.UserResponse;
-import org.acme.entity.User;
+import org.acme.dto.request.LoginRequest;
+import org.acme.dto.request.RegisterRequest;
+import org.acme.dto.response.LoginResponse;
+import org.acme.dto.response.UserResponse;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -31,5 +31,13 @@ public class AuthController {
         return Response.status(Response.Status.CREATED)
                 .entity(response)
                 .build();
+    }
+
+    @POST
+    @Path("/login")
+    public Response login(@Valid LoginRequest request) {
+        LoginResponse response = authService.login(request);
+
+        return Response.ok(response).build();
     }
 }

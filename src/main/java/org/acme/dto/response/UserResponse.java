@@ -1,4 +1,4 @@
-package org.acme.dto;
+package org.acme.dto.response;
 
 import java.util.UUID;
 

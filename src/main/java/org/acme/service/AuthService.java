@@ -1,7 +1,9 @@
 package org.acme.service;
 
-import org.acme.dto.RegisterRequest;
-import org.acme.dto.UserResponse;
+import org.acme.dto.request.LoginRequest;
+import org.acme.dto.request.RegisterRequest;
+import org.acme.dto.response.LoginResponse;
+import org.acme.dto.response.UserResponse;
 import org.acme.entity.User;
 import org.acme.security.PasswordService;
 
@@ -10,6 +12,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
+import java.time.Duration;
+import io.smallrye.jwt.build.Jwt;
 
 @ApplicationScoped
 public class AuthService {
@@ -40,5 +44,36 @@ public class AuthService {
                 user.name,
                 user.email
         );
+    }
+
+    public LoginResponse login(LoginRequest request) {
+        User user = User.find("email", request.email()).firstResult();
+
+        if (user == null) {
+            throw new WebApplicationException(
+                    "Email ou senha inválidos.",
+                    Response.Status.UNAUTHORIZED
+            );
+        }
+
+        boolean passwordMatches = passwordService.matches(
+                request.password(),
+                user.password
+        );
+
+        if (!passwordMatches) {
+            throw new WebApplicationException(
+                    "Email ou senha inválidos.",
+                    Response.Status.UNAUTHORIZED
+            );
+        }
+
+        String token = Jwt.issuer("cofre-digital")
+                .subject(user.email)
+                .claim("userId", user.id.toString())
+                .expiresIn(Duration.ofHours(1))
+                .sign();
+
+        return new LoginResponse(token);
     }
 }
