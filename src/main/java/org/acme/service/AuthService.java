@@ -5,6 +5,8 @@ import org.acme.dto.request.RegisterRequest;
 import org.acme.dto.response.LoginResponse;
 import org.acme.dto.response.UserResponse;
 import org.acme.entity.User;
+import org.acme.exception.auth.EmailAlreadyExistsException;
+import org.acme.exception.auth.InvalidCredentialsException;
 import org.acme.security.PasswordService;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -26,10 +28,7 @@ public class AuthService {
         User existingUser = User.find("email", request.email()).firstResult();
 
         if (existingUser != null) {
-            throw new WebApplicationException(
-                    "Email já cadastrado.",
-                    Response.Status.CONFLICT
-            );
+            throw new EmailAlreadyExistsException();
         }
 
         User user = new User();
@@ -50,10 +49,7 @@ public class AuthService {
         User user = User.find("email", request.email()).firstResult();
 
         if (user == null) {
-            throw new WebApplicationException(
-                    "Email ou senha inválidos.",
-                    Response.Status.UNAUTHORIZED
-            );
+            throw new InvalidCredentialsException();
         }
 
         boolean passwordMatches = passwordService.matches(
@@ -62,10 +58,7 @@ public class AuthService {
         );
 
         if (!passwordMatches) {
-            throw new WebApplicationException(
-                    "Email ou senha inválidos.",
-                    Response.Status.UNAUTHORIZED
-            );
+            throw new InvalidCredentialsException();
         }
 
         String token = Jwt.issuer("cofre-digital")

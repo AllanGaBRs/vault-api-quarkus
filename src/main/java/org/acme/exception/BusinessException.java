@@ -1,0 +1,17 @@
+package org.acme.exception;
+
+import jakarta.ws.rs.core.Response;
+
+public abstract class BusinessException extends RuntimeException {
+
+    private final Response.Status status;
+
+    protected BusinessException(String message, Response.Status status) {
+        super(message);
+        this.status = status;
+    }
+
+    public Response.Status getStatus() {
+        return status;
+    }
+}
