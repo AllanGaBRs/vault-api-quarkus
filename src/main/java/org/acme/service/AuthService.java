@@ -5,15 +5,14 @@ import org.acme.dto.request.RegisterRequest;
 import org.acme.dto.response.LoginResponse;
 import org.acme.dto.response.UserResponse;
 import org.acme.entity.User;
-import org.acme.exception.auth.EmailAlreadyExistsException;
-import org.acme.exception.auth.InvalidCredentialsException;
+import org.acme.exception.EmailAlreadyExistsException;
+import org.acme.exception.InvalidCredentialsException;
 import org.acme.security.PasswordService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
+
 import java.time.Duration;
 import io.smallrye.jwt.build.Jwt;
 

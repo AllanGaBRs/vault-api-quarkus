@@ -10,8 +10,8 @@ import org.acme.entity.User;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
+import org.acme.exception.SecretNotFoundException;
+import org.acme.exception.UserNotFoundException;
 import org.acme.security.CryptoService;
 
 @ApplicationScoped
@@ -29,10 +29,7 @@ public class SecretService {
         User user = User.findById(userId);
 
         if (user == null) {
-            throw new WebApplicationException(
-                    "Usuário não encontrado.",
-                    Response.Status.NOT_FOUND
-            );
+            throw new UserNotFoundException();
         }
 
         Secret secret = new Secret();
@@ -58,10 +55,7 @@ public class SecretService {
         ).firstResult();
 
         if (secret == null) {
-            throw new WebApplicationException(
-                    "Segredo não encontrado.",
-                    Response.Status.NOT_FOUND
-            );
+            throw new SecretNotFoundException();
         }
 
         return new SecretResponse(

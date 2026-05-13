@@ -1,10 +1,8 @@
-package org.acme.exception.auth;
+package org.acme.exception;
 
 import jakarta.ws.rs.core.Response;
-import org.acme.exception.BusinessException;
 
 public class InvalidCredentialsException extends BusinessException {
-
     public InvalidCredentialsException() {
         super("Email ou senha inválidos.", Response.Status.UNAUTHORIZED);
     }
