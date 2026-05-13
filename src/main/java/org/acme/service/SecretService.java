@@ -2,6 +2,7 @@ package org.acme.service;
 
 import java.util.UUID;
 
+import jakarta.inject.Inject;
 import org.acme.dto.request.SecretRequest;
 import org.acme.dto.response.SecretResponse;
 import org.acme.entity.Secret;
@@ -11,9 +12,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
+import org.acme.security.CryptoService;
 
 @ApplicationScoped
 public class SecretService {
+
+    @Inject
+    CryptoService cryptoService;
 
     @Transactional
     public SecretResponse create(
@@ -31,16 +36,16 @@ public class SecretService {
         }
 
         Secret secret = new Secret();
-        secret.title = request.title();
-        secret.secretContent = request.secretContent();
+        secret.title = cryptoService.encrypt(request.title());
+        secret.secretContent = cryptoService.encrypt(request.secretContent());
         secret.user = user;
 
         secret.persist();
 
         return new SecretResponse(
                 secret.id,
-                secret.title,
-                secret.secretContent
+                request.title(),
+                request.secretContent()
         );
     }
 }
