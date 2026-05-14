@@ -68,7 +68,8 @@ src/main/java/org/acme
 ├── entity
 ├── exception
 ├── security
-└── service
+├── service
+└── util
 ```
 
 ---
