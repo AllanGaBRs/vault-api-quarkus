@@ -8,6 +8,7 @@ import jakarta.ws.rs.*;
 import org.acme.dto.request.SecretRequest;
 import org.acme.dto.response.SecretResponse;
 import org.acme.service.SecretService;
+import org.acme.util.UUIDUtils;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import jakarta.inject.Inject;
@@ -32,7 +33,7 @@ public class SecretController {
     @RateLimit(value = 30, window = 1, windowUnit = ChronoUnit.MINUTES)
     public Response create(@Valid SecretRequest request) {
 
-        UUID userId = UUID.fromString(
+        UUID userId = UUIDUtils.parse(
                 jwt.getClaim("userId")
         );
 
@@ -51,7 +52,7 @@ public class SecretController {
     @RateLimit(value = 30, window = 1, windowUnit = ChronoUnit.MINUTES)
     public Response findById(@PathParam("id") String id) {
 
-        UUID userId = UUID.fromString(
+        UUID userId = UUIDUtils.parse(
                 jwt.getClaim("userId")
         );
 

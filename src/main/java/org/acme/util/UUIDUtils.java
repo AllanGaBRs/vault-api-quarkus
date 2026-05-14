@@ -8,8 +8,12 @@ public class UUIDUtils {
 
     public static UUID parse(String value) {
         try {
+            if (value == null || value.isBlank()) {
+                throw new InvalidUUIDException();
+            }
+
             return UUID.fromString(value);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException exception) {
             throw new InvalidUUIDException();
         }
     }
