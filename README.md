@@ -2,7 +2,7 @@
 
 API REST desenvolvida com Quarkus para armazenamento seguro de anotações e informações sensíveis.
 
-O sistema permite que usuários realizem cadastro, autenticação e gerenciamento de conteúdos secretos utilizando mecanismos modernos de segurança como JWT, criptografia AES, hash de senhas com BCrypt e proteção contra excesso de requisições.
+O sistema permite que usuários realizem cadastro, autenticação e gerenciamento de conteúdos secretos utilizando mecanismos modernos de segurança como JWT, criptografia AES-GCM, hash de senhas com BCrypt e proteção contra excesso de requisições.
 
 ---
 
@@ -14,7 +14,7 @@ O sistema permite que usuários realizem cadastro, autenticação e gerenciament
 - Hibernate ORM + Panache
 - JWT Authentication
 - BCrypt
-- AES Encryption
+- AES-GCM Encryption
 - Hibernate Validator
 - SmallRye Fault Tolerance
 - OpenAPI / Swagger
@@ -161,7 +161,7 @@ http://localhost:8080/q/swagger-ui
 | Dados sensíveis | AES-GCM com IV aleatório |
 | IDs | UUID |
 | Rate Limit | SmallRye Fault Tolerance |
-| Exceptions | Global Handler |
+| Exceptions | Global Exception Handlers |
 
 ---
 
