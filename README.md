@@ -76,6 +76,42 @@ src/main/java/org/acme
 
 ## ▶️ Executando o projeto
 
+### 🔑 Configuração das Chaves
+
+Antes de executar o projeto, é necessário criar os arquivos de chave utilizados para autenticação JWT e criptografia AES.
+
+### Chaves JWT
+
+Gerar as chaves RSA para autenticação:
+
+```bash
+openssl genrsa -out privateKey.pem 2048
+
+openssl rsa -pubout \
+-in privateKey.pem \
+-out publicKey.pem
+```
+
+---
+
+### Chave de Criptografia AES
+
+Criar o arquivo:
+
+```txt
+cryptoKey.pem
+```
+
+Adicionar uma chave de exatamente **32 caracteres** dentro do arquivo:
+
+```txt
+12345678901234567890123456789012
+```
+
+Essa chave será utilizada para criptografar informações sensíveis armazenadas no sistema.
+
+---
+
 Rodar aplicação:
 
 ```bash
