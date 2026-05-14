@@ -31,7 +31,7 @@ O sistema permite que usuários realizem cadastro, autenticação e gerenciament
 
 ### Segurança
 
-- Criptografia AES para informações sensíveis
+- Criptografia AES-GCM com IV aleatório para informações sensíveis
 - UUID como identificador
 - Rate Limit para prevenção de spam e brute force
 - Tratamento global de exceções
