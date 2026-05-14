@@ -120,6 +120,28 @@ Rodar aplicação:
 
 ---
 
+## 📮 Postman Collection
+
+Uma collection do Postman foi disponibilizada no projeto para facilitar testes e validações da API.
+
+Arquivo disponível:
+
+```txt
+code-swap-api.postman_collection.json
+```
+
+Fluxo recomendado:
+
+```txt
+Register
+↓
+Login
+↓
+Create Secret
+↓
+Get Secret By ID
+```
+
 ## 📖 Swagger
 
 Disponível em:
