@@ -158,7 +158,7 @@ http://localhost:8080/q/swagger-ui
 |----------|----------------|
 | Senhas | BCrypt |
 | Autenticação | JWT |
-| Dados sensíveis | AES |
+| Dados sensíveis | AES-GCM com IV aleatório |
 | IDs | UUID |
 | Rate Limit | SmallRye Fault Tolerance |
 | Exceptions | Global Handler |
