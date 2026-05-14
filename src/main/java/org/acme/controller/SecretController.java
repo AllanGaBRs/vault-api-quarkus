@@ -47,7 +47,7 @@ public class SecretController {
     @GET
     @Path("/{id}")
     @RateLimit(value = 30, window = 1, windowUnit = ChronoUnit.MINUTES)
-    public Response findById(@PathParam("id") UUID secretId) {
+    public Response findById(@PathParam("id") String id) {
 
         UUID userId = UUID.fromString(
                 jwt.getClaim("userId")
@@ -55,7 +55,7 @@ public class SecretController {
 
         SecretResponse response = secretService.findById(
                 userId,
-                secretId
+                id
         );
 
         return Response.ok(response).build();

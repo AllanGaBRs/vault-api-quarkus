@@ -10,9 +10,11 @@ import org.acme.entity.User;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import org.acme.exception.InvalidUUIDException;
 import org.acme.exception.SecretNotFoundException;
 import org.acme.exception.UserNotFoundException;
 import org.acme.security.CryptoService;
+import org.acme.util.UUIDUtils;
 
 @ApplicationScoped
 public class SecretService {
@@ -46,7 +48,9 @@ public class SecretService {
         );
     }
 
-    public SecretResponse findById(UUID userId, UUID secretId) {
+    public SecretResponse findById(UUID userId, String id) {
+
+        UUID secretId = UUIDUtils.parse(id);
 
         Secret secret = Secret.find(
                 "id = ?1 and user.id = ?2",
